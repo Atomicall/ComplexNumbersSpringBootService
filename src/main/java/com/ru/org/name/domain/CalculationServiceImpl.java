@@ -40,7 +40,7 @@ public class CalculationServiceImpl implements CalculationService
     public CalculationResult calculate(double re, double im) throws InternalValidationExceptionsImpl
     {
 
-        logger.info("Successfully calculated");
+        logger.info("Successfully calculated");;
         return new CalculationResult(calculatePhase(re, im), calculateMod(re, im));
     }
 
