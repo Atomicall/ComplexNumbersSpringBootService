@@ -6,6 +6,7 @@ public class InputParams {
     private double real;
     private double imagine;
 
+
     public InputParams(double real, double imagine)
     {
         this.real = real;

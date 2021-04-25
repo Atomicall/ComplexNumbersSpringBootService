@@ -1,4 +1,4 @@
-package com.ru.org.name.cache;
+package com.ru.org.name.data;
 
 import com.ru.org.name.Controller;
 import com.ru.org.name.interfaces.MapCache;
@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.logging.Logger;
+
 
 
 @Component
@@ -28,12 +28,11 @@ public class MapCacheImpl implements MapCache {
         return result;
     }
     @Override
-    public void addCalculationresult(InputParams pair, CalculationResult result)
+    public void addCalculationResult(InputParams pair, CalculationResult result)
     {
         logger.info("Adding result to Cache:", pair, " Is ",result);
         theMap.put(pair, result);
     }
-
 
 
 

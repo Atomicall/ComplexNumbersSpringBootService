@@ -36,9 +36,9 @@ class ControllerTest {
     {
         mockMvc.perform(get("http://localhost:8080/calculate/?RealPart=1&ImgPart=3") ).andExpect(status().isOk())
                 .andExpect(content().json("{mod:3.1622776601683795,ph:1.2490457723982544}"));
-        //this.mockMvc.perform (get("http://localhost:8080/calculate/?RealPart=-2000&ImgPart=3") ).andExpect(status().isBadRequest());
+        this.mockMvc.perform (get("http://localhost:8080/calculate/?RealPart=-2000&ImgPart=3") ).andExpect(status().isBadRequest());
 
-        //this.mockMvc.perform (get("http://localhost:8080/calculate/?RealPart=1") ).andExpect(status().isBadRequest());
+        this.mockMvc.perform (get("http://localhost:8080/calculate/?RealPart=1") ).andExpect(status().isBadRequest());
 
     }
 

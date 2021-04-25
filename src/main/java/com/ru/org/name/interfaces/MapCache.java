@@ -7,12 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.logging.Logger;
 
-@Component
+
 public interface MapCache {
-
-
     public CalculationResult getCalculationResult (InputParams pair);
-    public void addCalculationresult(InputParams pair, CalculationResult result);
-
-
+    public void addCalculationResult(InputParams pair, CalculationResult result);
 }
