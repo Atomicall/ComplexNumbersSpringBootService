@@ -1,6 +1,6 @@
 package com.ru.org.name.domain;
 
-import com.ru.org.name.interfaces.InternalValidationExceptions;
+import com.ru.org.name.domain.interfaces.InternalValidationExceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

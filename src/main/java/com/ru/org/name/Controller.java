@@ -1,9 +1,11 @@
 package com.ru.org.name;
 
 
-import com.ru.org.name.data.Counter;
-import com.ru.org.name.domain.CalculationServiceImpl;
+import com.ru.org.name.data.CounterImpl;
+import com.ru.org.name.domain.CalculateUseCase;
 import com.ru.org.name.domain.InternalValidationExceptionsImpl;
+import com.ru.org.name.domain.interfaces.CalculationService;
+import com.ru.org.name.domain.interfaces.Counter;
 import com.ru.org.name.models.CalculationResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,26 +27,27 @@ public class Controller {
 
     private Logger logger = LoggerFactory.getLogger(Controller.class);
     @Autowired
-    private CalculationServiceImpl calculationService;
+    private CalculateUseCase calculateUseCase;
+    @Autowired
+    Counter counter;
 
     @RequestMapping("/calculate")
     public CalculationResult calculate(@RequestParam(value = "RealPart", required = true) @Min(-1000)  double real, // Min для галочки и отработки исключений
                                        @RequestParam(value = "ImgPart", required = true) @Min(-1000) double imagine)
            throws InternalValidationExceptionsImpl
     {
-        return (calculationService.calculate(real, imagine));
+        return (calculateUseCase.calculate(real, imagine));
     }
 
     @RequestMapping("/getCount")
     public Integer GetCount()
     {
-        return Counter.getCounter();
+        return counter.getCounter();
     }
 
 
-    @ExceptionHandler(ConstraintViolationException.class) // 400 Bag_Request
-    @ResponseStatus(HttpStatus.BAD_REQUEST) // Т.к спринг по-умолчанию при несоотв параметров переданных как выше кидает ответ 500 и искл
-    // ConstraintViolationException. Автоматически они не обрабатываются
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException e) {
 
         logger.warn(e.getMessage());
@@ -57,6 +60,12 @@ public class Controller {
     public ResponseEntity<String> handleMissingParams(MissingServletRequestParameterException e) {
         logger.info ("Missing Param in Controller");
         return new ResponseEntity<>("MissingParam: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(InternalValidationExceptionsImpl.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<String> handleInternalValidationException(MissingServletRequestParameterException e) {
+        logger.info ("InternalValidation Error");
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 

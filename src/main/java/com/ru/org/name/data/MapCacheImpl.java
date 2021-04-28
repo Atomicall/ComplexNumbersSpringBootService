@@ -1,7 +1,7 @@
 package com.ru.org.name.data;
 
 import com.ru.org.name.Controller;
-import com.ru.org.name.interfaces.MapCache;
+import com.ru.org.name.domain.interfaces.MapCache;
 import com.ru.org.name.models.CalculationResult;
 import com.ru.org.name.models.InputParams;
 import org.slf4j.LoggerFactory;
