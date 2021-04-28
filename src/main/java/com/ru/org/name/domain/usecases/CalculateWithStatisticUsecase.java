@@ -21,11 +21,13 @@ public class CalculateWithStatisticUsecase extends CalculateUseCase {
 
 
         //Sort ONLY by Module; Need another? Edit comparator
-        cres.setStatistic(new Statistic(
+        cres.setStatistic(
+                new Statistic(
                 cres.getResultsList().stream().min(CalculationResult::compare).get() ,
                 cres.getResultsList().stream().max(CalculationResult::compare).get(),
                 cres.getResultsList().stream().mapToDouble((d)->{return d.getModule();}).average().getAsDouble()
-        ));
+                )
+        );
         logger.info("/////-Ending Calculate with Stats-/////");
         return cres;
     }
