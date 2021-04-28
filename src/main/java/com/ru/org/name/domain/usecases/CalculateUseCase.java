@@ -1,5 +1,6 @@
-package com.ru.org.name.domain;
+package com.ru.org.name.domain.usecases;
 
+import com.ru.org.name.domain.InternalValidationExceptionsImpl;
 import com.ru.org.name.domain.interfaces.CalculationService;
 import com.ru.org.name.domain.interfaces.Counter;
 import com.ru.org.name.domain.interfaces.InternalValidationExceptions;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 @Component
 public class CalculateUseCase {
 
-    private Logger logger = LoggerFactory.getLogger(CalculateUseCase.class);
+    protected Logger logger = LoggerFactory.getLogger(CalculateUseCase.class);
     @Autowired
     public MapCache cache;
     @Autowired
@@ -26,7 +27,7 @@ public class CalculateUseCase {
     @Autowired
     public CalculationService cs;
 
-    private CalculationResult calculateSingle (double re, double im) throws InternalValidationExceptionsImpl {
+    protected CalculationResult calculateSingle (double re, double im) throws InternalValidationExceptionsImpl {
 
         logger.info("_____________________________");
         logger.info("Starting Calculation");
@@ -51,7 +52,7 @@ public class CalculateUseCase {
         }
     }
 
-    private List<CalculationResult> calculateBulk(List<InputParams> inputParamsList) throws InternalValidationExceptions {
+    protected List<CalculationResult> calculateBulk(List<InputParams> inputParamsList) throws InternalValidationExceptions {
 
         return inputParamsList.stream().
                         map(d -> {

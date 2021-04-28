@@ -2,7 +2,7 @@ package com.ru.org.name.models;
 
 import java.util.Objects;
 
-public class CalculationResult {
+public class CalculationResult{
     private double phase;
 
     private double module;
@@ -18,6 +18,12 @@ public class CalculationResult {
 
     public double getModule() {
         return module;
+    }
+
+
+    public static int compare(CalculationResult o1, CalculationResult o2){
+            if (o1.module == o2.module) return 0;
+           return o1.module< o2.module ? -1 : 1;
     }
 
     @Override

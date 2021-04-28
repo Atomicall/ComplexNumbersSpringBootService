@@ -1,12 +1,12 @@
 package com.ru.org.name;
 
 
-import com.ru.org.name.data.CounterImpl;
-import com.ru.org.name.domain.CalculateUseCase;
+import com.ru.org.name.domain.usecases.CalculateUseCase;
 import com.ru.org.name.domain.InternalValidationExceptionsImpl;
-import com.ru.org.name.domain.interfaces.CalculationService;
 import com.ru.org.name.domain.interfaces.Counter;
+import com.ru.org.name.domain.usecases.CalculateWithStatisticUsecase;
 import com.ru.org.name.models.CalculationResult;
+import com.ru.org.name.models.CalculationResultsListWithStatistic;
 import com.ru.org.name.models.InputParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.constraints.Min;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,6 +29,8 @@ public class Controller {
     private Logger logger = LoggerFactory.getLogger(Controller.class);
     @Autowired
     private CalculateUseCase calculateUseCase;
+    @Autowired
+    private CalculateWithStatisticUsecase calculateWithStatisticUsecase;
     @Autowired
     Counter counter;
 
@@ -50,8 +51,17 @@ public class Controller {
 
     @PostMapping("/bulkCalculate")
     public List<CalculationResult> bCalculate(@RequestBody List<InputParams> inputParamsList){
-        return calculateUseCase.calculate(inputParamsList);
+            return calculateUseCase.calculate(inputParamsList);
     }
+
+    @PostMapping("/bulkCalculateWithStat")
+    public CalculationResultsListWithStatistic bCalculateWithStatistic(@RequestBody List<InputParams> inputParamsList){
+        return calculateWithStatisticUsecase.calculateWithStatistic(inputParamsList);
+    }
+
+
+
+
 
 
     @ExceptionHandler(ConstraintViolationException.class)
