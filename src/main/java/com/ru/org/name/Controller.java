@@ -7,6 +7,7 @@ import com.ru.org.name.domain.InternalValidationExceptionsImpl;
 import com.ru.org.name.domain.interfaces.CalculationService;
 import com.ru.org.name.domain.interfaces.Counter;
 import com.ru.org.name.models.CalculationResult;
+import com.ru.org.name.models.InputParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.constraints.Min;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Validated // проверять ограничения на параметрах метода.
@@ -43,6 +45,12 @@ public class Controller {
     public Integer GetCount()
     {
         return counter.getCounter();
+    }
+
+
+    @PostMapping("/bulkCalculate")
+    public List<CalculationResult> bCalculate(@RequestBody List<InputParams> inputParamsList){
+        return calculateUseCase.calculate(inputParamsList);
     }
 
 

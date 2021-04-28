@@ -21,6 +21,14 @@ public class InputParams {
         return imagine;
     }
 
+    public void setReal(double real) {
+        this.real = real;
+    }
+
+    public void setImagine(double imagine) {
+        this.imagine = imagine;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

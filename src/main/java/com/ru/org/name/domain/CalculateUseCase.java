@@ -11,6 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Component
 public class CalculateUseCase {
@@ -48,15 +51,51 @@ public class CalculateUseCase {
         }
     }
 
+    private List<CalculationResult> calculateBulk(List<InputParams> inputParamsList) throws InternalValidationExceptions {
+
+        return inputParamsList.stream().
+                        map(d -> {
+                            try {
+                                return calculateSingle(d.getReal(), d.getImagine());
+                            } catch (InternalValidationExceptionsImpl internalValidationExceptions) {
+                                logger.error("InternalValidationException in"+d.getClass()+"with: Real"+
+                                        d.getReal()+" Imagine:"+d.getImagine());
+                                return null;
+                            }
+                        }).
+                        collect(Collectors.toList());
+        ///// собрать в лист чего? исходных impParams или того, что вернет каждый эл-то после применения map?
+    }
+
+
     public CalculationResult calculate (double re, double im)
     {
         try {
             return calculateSingle( re, im);
         }
-        catch (InternalValidationExceptionsImpl e){
+        catch (InternalValidationExceptions e){
             return null;
         }
     }
+
+    public List<CalculationResult> calculate (List<InputParams> inputParamsList)
+    {
+        logger.info("!!!!!!!!!!!!!!!!!!!!!!!");
+        logger.info("Starting Bulk Calculation");
+        try {
+            return calculateBulk(inputParamsList);
+        }
+        catch (InternalValidationExceptions e){
+            logger.error("InternalValidationException");
+            return null;
+        }
+        finally {
+            logger.info("!!!!!!!!!!!!!!!!!!!!!!!");
+            logger.info("Ending Bulk Calculation");
+        }
+    }
+
+
 
 
 }
