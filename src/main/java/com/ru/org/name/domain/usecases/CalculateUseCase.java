@@ -52,6 +52,10 @@ public class CalculateUseCase {
         }
     }
 
+    public MapCache getCache(){
+        return cache;
+    }
+
     protected List<CalculationResult> calculateBulk(List<InputParams> inputParamsList) throws InternalValidationExceptions {
 
         return inputParamsList.stream().

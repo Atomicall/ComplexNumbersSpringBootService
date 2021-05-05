@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-
+import java.util.Set;
 
 
 @Component
@@ -32,6 +32,15 @@ public class MapCacheImpl implements MapCache {
     {
         logger.info("Adding result to Cache:", pair, " Is ",result);
         theMap.put(pair, result);
+    }
+
+    public Set<InputParams> getQuerries (){
+        return theMap.keySet();
+    }
+
+    @Override
+    public void clear(){
+        theMap.clear();
     }
 
 

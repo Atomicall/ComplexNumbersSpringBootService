@@ -1,6 +1,8 @@
 package com.ru.org.name;
 
-
+import com.ru.org.name.data.database.AnswerEntity;
+import com.ru.org.name.domain.interfaces.AnswerRepository;
+import com.ru.org.name.domain.interfaces.MapCache;
 import com.ru.org.name.domain.usecases.CalculateUseCase;
 import com.ru.org.name.domain.InternalValidationExceptionsImpl;
 import com.ru.org.name.domain.interfaces.Counter;
@@ -34,6 +36,9 @@ public class Controller {
     @Autowired
     Counter counter;
 
+    @Autowired
+    AnswerRepository repository;
+
     @RequestMapping("/calculate")
     public CalculationResult calculate(@RequestParam(value = "RealPart", required = true) @Min(-1000)  double real, // Min для галочки и отработки исключений
                                        @RequestParam(value = "ImgPart", required = true) @Min(-1000) double imagine)
@@ -59,6 +64,25 @@ public class Controller {
         return calculateWithStatisticUsecase.calculateWithStatistic(inputParamsList);
     }
 
+
+
+    @GetMapping("/getFromDB")
+    public List<AnswerEntity> getAnswers(){
+        return repository.findAll(); // возвращаем все значения нужных полей
+    }
+    @PostMapping("/writeDB")
+    public void writeAnswers() {
+       MapCache cache =  calculateUseCase.getCache();
+       int id = 0;
+       for (InputParams kpg: cache.getQuerries()) {
+           AnswerEntity answerEntity = new AnswerEntity();
+           answerEntity.setAnswerId(id++);
+           answerEntity.setModule_value(cache.getCalculationResult(kpg).getModule());
+           answerEntity.setPhase_value(cache.getCalculationResult(kpg).getPhase());
+           repository.save(answerEntity);
+       }
+       cache.clear();
+    }
 
 
 
@@ -88,8 +112,4 @@ public class Controller {
 
 
     }
-
-    //theRootAcc1
-//user1
-//user1PaSS
 
