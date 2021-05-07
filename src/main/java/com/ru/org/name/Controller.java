@@ -68,7 +68,7 @@ public class Controller {
 
     @GetMapping("/getFromDB")
     public List<AnswerEntity> getAnswers(){
-        return repository.findAll(); // возвращаем все значения нужных полей
+        return repository.findAll();
     }
     @PostMapping("/writeDB")
     public void writeAnswers() {
@@ -79,6 +79,8 @@ public class Controller {
            answerEntity.setAnswerId(id++);
            answerEntity.setModule_value(cache.getCalculationResult(kpg).getModule());
            answerEntity.setPhase_value(cache.getCalculationResult(kpg).getPhase());
+           answerEntity.setImagine(kpg.getImagine());
+           answerEntity.setReal(kpg.getReal());
            repository.save(answerEntity);
        }
        cache.clear();
