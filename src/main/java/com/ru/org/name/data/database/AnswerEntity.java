@@ -9,6 +9,10 @@ public class AnswerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer answerId;
 
+    @Column(name = "Request", nullable = false)
+    private double real;
+    private double imagine;
+
     @Column(name = "Result", nullable = false)
     private double phase_value;
     private double module_value;
@@ -17,8 +21,10 @@ public class AnswerEntity {
     public AnswerEntity() {
     }
 
-    public AnswerEntity(Integer answerId, double phase_value, double module_value) {
+    public AnswerEntity(Integer answerId, double real, double imagine, double phase_value, double module_value) {
         this.answerId = answerId;
+        this.real = real;
+        this.imagine = imagine;
         this.phase_value = phase_value;
         this.module_value = module_value;
     }
@@ -29,6 +35,22 @@ public class AnswerEntity {
 
     public void setAnswerId(Integer answerId) {
         this.answerId = answerId;
+    }
+
+    public double getReal() {
+        return real;
+    }
+
+    public void setReal(double real) {
+        this.real = real;
+    }
+
+    public double getImagine() {
+        return imagine;
+    }
+
+    public void setImagine(double imagine) {
+        this.imagine = imagine;
     }
 
     public double getPhase_value() {
