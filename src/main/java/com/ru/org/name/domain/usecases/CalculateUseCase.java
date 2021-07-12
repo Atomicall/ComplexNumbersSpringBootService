@@ -69,7 +69,6 @@ public class CalculateUseCase {
                             }
                         }).
                         collect(Collectors.toList());
-        ///// собрать в лист чего? исходных impParams или того, что вернет каждый эл-то после применения map?
     }
 
 
